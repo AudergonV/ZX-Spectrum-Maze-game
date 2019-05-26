@@ -1,8 +1,38 @@
 1 REM ZX Maze by Vincent Audergon
 2 REM This software is open source. You can redistribute it and / or modify it
 10 BORDER 7 : PAPER 7 : INK 0 : CLS
-20 PRINT AT 10, 2; "ZX Maze by Vincent Audergon" 
-30 BORDER 0
-40 PAUSE 100
-50 CLS
-60 PRINT AT 10, 4; "Hello world !!"
+
+20 PRINT AT 5,2; "ZX Maze by Vincent Audergon" 
+21 PRINT AT 7,9; PAPER 7; INK 0; "W - Up"
+22 PRINT AT 8,9; PAPER 7; INK 0; "S - Down"
+23 PRINT AT 9,9; PAPER 7; INK 0; "A - Left"
+24 PRINT AT 10,9; PAPER 7; INK 0; "D - Right"
+25 PRINT AT 15,3; PAPER 7; INK 0; "Press any key to start"
+
+30 LET WSCREEN = 30
+31 LET HSCREEN = 22
+
+40 LET j$ = INKEY$
+41 IF j$ = "" THEN GOTO 40: END IF
+
+49 REM DRAW BORDER, START AND END
+50 BORDER 0 : CLS : INK 2
+51 PRINT AT 0,0; CHR$(143)
+52 PRINT AT HSCREEN,WSCREEN; CHR$(143) : INK 0
+54 FOR lin = 0 TO HSCREEN + 1
+55 PRINT AT lin,WSCREEN+1; CHR$(143)
+56 NEXT lin
+57 FOR col = 0 TO WSCREEN + 1
+58 PRINT AT HSCREEN+1,col; CHR$(143)
+59 NEXT col
+
+68 REM RANDOM PATH IN THE WALL
+69 LET b = INT (RND * 100) Mod HSCREEN +1
+70 FOR lin = 0 TO HSCREEN
+71 IF lin <> b THEN
+72 PRINT AT lin,15; CHR$(143)
+73 END IF
+74 NEXT lin
+
+100 GOTO 40
+
