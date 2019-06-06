@@ -33,8 +33,8 @@
 
 
 REM Returns a numbre between min and max (max must be < 100 and min must be >= 0)
-REM The random number returned will never eq to min or max
-FUNCTION randBet(min AS UBYTE, max AS UBYTE)
+FUNCTION randBet(min AS BYTE, max AS BYTE)
+    max = max+1 : min = min -1
     RETURN INT (RND * (max-min)) + min
 END FUNCTION
 
@@ -55,24 +55,24 @@ FUNCTION hWall(y AS UBYTE,startx AS UBYTE, endx AS UBYTE, door AS UBYTE)
 END FUNCTION
 
 FUNCTION divide(x AS UBYTE, y as UBYTE, w as UBYTE, h as UBYTE)
-    IF w <= 1 or h <= 1 THEN
-        RETURN 0
-    END IF
-    IF w < h THEN
-        LET row = randBet(y, y+h) 
-        LET door = randBet(x, x+w)
-        hWall(row, x, x + w, door)
-        divide(x,y, w, h-row) : REM Upper grid
-        divide(x,y+row, w, h-(h-row)) : REM Lower grid
+    IF w < 2 or h < 2 THEN
     ELSE
-        LET col = randBet(x, x+w)
-        LET door = randBet(y, y+h)
-        vWall(col, y, y + h, door)
-        divide(x,y, w-col, h) : REM Left grid
-        divide(x+col, y, w-(w-col), h):REM Right grid
+        LET d = randBet(0,1)
+        IF d = 1 THEN
+            LET row = randBet(y, y+h) 
+            LET door = randBet(x, x+w)
+            hWall(row, x, x + w, door)
+            divide(x,y, w, row) : REM Upper grid
+            divide(x,y+row, w, h-row) : REM Lower grid
+        ELSE
+            LET col = randBet(x, x+w)
+            LET door = randBet(y, y+h)
+            vWall(col, y, y + h, door)
+            divide(x,y, col, h) : REM Left grid
+            divide(x+col, y, w-col, h):REM Right grid
+        END IF
     END IF
 END FUNCTION
-
 
 150 GOTO 40
 

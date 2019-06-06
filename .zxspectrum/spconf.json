@@ -1,0 +1,8 @@
+{
+  "model": "ZX Spectrum 48K",
+  "edition": "PAL",
+
+  "defaultTape": "maze.tap",
+  "fastLoad": true
+}
+
